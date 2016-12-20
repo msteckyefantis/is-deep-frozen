@@ -2,18 +2,17 @@
 
 const subzero = require( 'subzero' );
 
+const INPUT_VALUE = 'inputValue';
 
 module.exports = subzero.megaFreeze( function isDeepFrozen( inputValue ) {
 
     const notFrozen = [];
 
-    addToNotFrozenIfNotFrozen( 'inputValue', inputValue, notFrozen )
+    addToNotFrozenIfNotFrozen( INPUT_VALUE, inputValue, notFrozen )
 
     const testedAlready = [ inputValue ];
 
-    const basePath = 'inputValue.';
-
-    testFrozennessOfPropertiesRecursively( basePath, inputValue, notFrozen, testedAlready );
+    testFrozennessOfPropertiesRecursively( INPUT_VALUE, inputValue, notFrozen, testedAlready );
 
     const result = {};
 
@@ -55,15 +54,13 @@ const testFrozennessOfPropertiesRecursively = subzero.megaFreeze( function( base
             propertyHasNotBeenTestedAlready
         ) {
 
-            const fullPropertyName =  basePath + propertyName;
+            const fullPropertyName =  `${ basePath }[ "${ propertyName }" ]`;
 
             addToNotFrozenIfNotFrozen( fullPropertyName, property, notFrozen );
 
             testedAlready.push( property );
 
-            const newBathPath = fullPropertyName + '.';
-
-            testFrozennessOfPropertiesRecursively( newBathPath, property, notFrozen, testedAlready );
+            testFrozennessOfPropertiesRecursively( fullPropertyName, property, notFrozen, testedAlready );
         }
     }
 });
