@@ -15,25 +15,22 @@ module.exports = subzero.megaFreeze( function isDeepFrozen( inputValue ) {
 
     testFrozennessOfPropertiesRecursively( INPUT_VALUE, inputValue, notFrozen, testedAlready );
 
-    const result = {};
+    const result = getResult( notFrozen );
 
-    if( notFrozen.length > 0 ) {
+    cleanUpArrays( notFrozen, testedAlready )
 
-        const error = new Error( notFrozen.join( '\n' ) )
+    return result;
+});
 
-        error.name = 'NotDeeplyFrozenError';
 
-        result.error = error;
+const addToNotFrozenIfNotFrozen = subzero.megaFreeze( function( fullPropertyName, property, notFrozen ) {
 
-        result.notDeeplyFrozen = true;
+    if( !Object.isFrozen( property ) ) {
+
+        const valueAsString = JSON.stringify( property, null, 4 ) || property.toString();
+
+        notFrozen.push( `property: ${ fullPropertyName }, value: ${ valueAsString }` );
     }
-
-    notFrozen.length = 0;
-    testedAlready.length = 0;
-    subzero.megaFreeze( notFrozen );
-    subzero.megaFreeze( testedAlready );
-
-    return subzero.megaFreeze( result );
 });
 
 
@@ -67,12 +64,30 @@ const testFrozennessOfPropertiesRecursively = subzero.megaFreeze( function( base
 });
 
 
-const addToNotFrozenIfNotFrozen = subzero.megaFreeze( function( fullPropertyName, property, notFrozen ) {
+const getResult = subzero.megaFreeze( function( notFrozen ) {
 
-    if( !Object.isFrozen( property ) ) {
+    const result = {};
 
-        const valueAsString = JSON.stringify( property, null, 4 ) || property.toString();
+    if( notFrozen.length > 0 ) {
 
-        notFrozen.push( `property: ${ fullPropertyName }, value: ${ valueAsString }` );
+        const error = new Error( notFrozen.join( '\n' ) )
+
+        error.name = 'NotDeeplyFrozenError';
+
+        result.error = error;
+
+        result.notDeeplyFrozen = true;
+    }
+
+    return subzero.megaFreeze( result );
+});
+
+
+const cleanUpArrays = subzero.megaFreeze( function() {
+
+    for( const array of arguments ) {
+
+        array.length = 0;
+        subzero.megaFreeze( array );
     }
 });
