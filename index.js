@@ -9,7 +9,7 @@ module.exports = subzero.megaFreeze( function isDeepFrozen( inputValue ) {
 
     const notFrozen = [];
 
-    addToNotFrozenIfNotFrozen( INPUT_VALUE, inputValue, notFrozen )
+    addToNotFrozenIfNotFrozen( INPUT_VALUE, inputValue, notFrozen );
 
     const testedAlready = [ inputValue ];
 
@@ -70,7 +70,7 @@ const getResult = subzero.megaFreeze( function( notFrozen ) {
 
     if( notFrozen.length > 0 ) {
 
-        const error = new Error( notFrozen.join( '\n' ) )
+        const error = new Error( notFrozen.join( '\n' ) );
 
         error.name = 'NotDeeplyFrozenError';
 
