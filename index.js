@@ -17,7 +17,7 @@ module.exports = subzero.megaFreeze( function isDeepFrozen( inputValue ) {
 
     const result = getResult( notFrozen );
 
-    cleanUpArrays( notFrozen, testedAlready )
+    cleanUpArrays( notFrozen, testedAlready );
 
     return result;
 });
