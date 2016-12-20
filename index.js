@@ -21,9 +21,9 @@ module.exports = subzero.megaFreeze( function isDeepFrozen( inputValue ) {
 
         error.name = 'NotDeeplyFrozenError';
 
-        result.notFrozen = true;
-
         result.error = error;
+
+        result.notFrozen = true;
     }
 
     notFrozen.length = 0;
