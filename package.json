@@ -1,7 +1,7 @@
 {
   "name": "is-deep-frozen",
   "version": "2.0.2",
-  "description": "check if an object or function is deep frozen",
+  "description": "check if an object or function is deeply frozen",
   "main": "index.js",
   "scripts": {
     "test": "./node_modules/.bin/istanbul cover node_modules/mocha/bin/_mocha -- test --recursive",
