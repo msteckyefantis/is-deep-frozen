@@ -1,11 +1,11 @@
 {
   "name": "is-deep-frozen",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "check if an object or function is deep frozen",
   "main": "index.js",
   "scripts": {
-      "test": "./node_modules/.bin/istanbul cover node_modules/mocha/bin/_mocha -- test --recursive",
-      "test/": "./node_modules/.bin/istanbul cover node_modules/mocha/bin/_mocha -- test --recursive"
+    "test": "./node_modules/.bin/istanbul cover node_modules/mocha/bin/_mocha -- test --recursive",
+    "test/": "./node_modules/.bin/istanbul cover node_modules/mocha/bin/_mocha -- test --recursive"
   },
   "repository": {
     "type": "git",
@@ -27,8 +27,7 @@
   "homepage": "https://github.com/msteckyefantis/is-deep-frozen#readme",
   "dependencies": {
     "subzero": "^5.0.21"
-
-   },
+  },
   "devDependencies": {
     "chai": "^3.5.0",
     "istanbul": "^0.4.5",
