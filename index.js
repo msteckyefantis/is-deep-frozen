@@ -52,7 +52,7 @@ const testFrozennessOfPropertiesRecursively = subzero.megaFreeze( function( base
             propertyHasNotBeenTestedAlready
         ) {
 
-            const fullPropertyName =  `${ basePath }[ "${ propertyName }" ]`;
+            const fullPropertyName = `${ basePath }[ "${ propertyName }" ]`;
 
             addToNotFrozenIfNotFrozen( fullPropertyName, property, notFrozen );
 
