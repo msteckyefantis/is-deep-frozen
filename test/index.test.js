@@ -45,6 +45,8 @@ describe( MODULE_PATH, function() {
 
             const result = isDeepFrozen( controlObject );
 
+            expect( result.notDeeplyFrozen ).to.be.true;
+
             expect( result.error.message ).to.include( 'property: inputValue, value: {}' );
         });
 
@@ -62,6 +64,8 @@ describe( MODULE_PATH, function() {
             const controlFunction = function() {};
 
             const result = isDeepFrozen( controlFunction );
+
+            expect( result.notDeeplyFrozen ).to.be.true;
 
             expect( result.error.message ).to.include( 'property: inputValue, value: function () {}' );
             expect( result.error.message ).to.include( 'property: inputValue[ "prototype" ], value: {}' );
@@ -84,6 +88,8 @@ describe( MODULE_PATH, function() {
             const controlClass = class {};
 
             const result = isDeepFrozen( controlClass );
+
+            expect( result.notDeeplyFrozen ).to.be.true;
 
             expect( result.error.message ).to.include( 'property: inputValue, value: class {}' );
             expect( result.error.message ).to.include( 'property: inputValue[ "prototype" ], value: {}' );
@@ -135,6 +141,8 @@ describe( MODULE_PATH, function() {
             };
 
             const result = isDeepFrozen( a );
+
+            expect( result.notDeeplyFrozen ).to.be.true;
 
             expect( result.error.message ).to.include( 'property: inputValue,' );
 
@@ -194,6 +202,8 @@ describe( MODULE_PATH, function() {
             });
 
             const result = isDeepFrozen( a );
+
+            expect( result.notDeeplyFrozen ).to.be.true;
 
             expect( result.error.message ).to.not.include( 'property: inputValue,' );
 
