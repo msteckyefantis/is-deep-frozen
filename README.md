@@ -1,4 +1,4 @@
-# is-deep-frozen?
+# is-deep-frozen? [![npm version](https://badge.fury.io/js/is-deep-frozen.svg)](https://badge.fury.io/js/is-deep-frozen) [![Build Status](https://travis-ci.org/msteckyefantis/is-deep-frozen.svg?branch=master)](https://travis-ci.org/msteckyefantis/is-deep-frozen)
 
 
 [![dkconfused.png](https://s27.postimg.org/lri7kmepv/dkconfused.png)](https://postimg.org/image/g3bwtqadb/)
