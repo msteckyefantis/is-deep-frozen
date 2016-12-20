@@ -67,8 +67,8 @@ const addToNotFrozenIfNotFrozen = subzero.megaFreeze( function( propertyName, pr
 
     if( !Object.isFrozen( property ) ) {
 
-        const stringValue = JSON.stringify( property, null, 4 ) || property.toString();
+        const valueAsString = JSON.stringify( property, null, 4 ) || property.toString();
 
-        notFrozen.push( `property: ${ propertyName }, value: ${ stringValue }` );
+        notFrozen.push( `property: ${ propertyName }, value: ${ valueAsString }` );
     }
 });
