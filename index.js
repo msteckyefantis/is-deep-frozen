@@ -41,9 +41,9 @@ const testFrozennessOfPropertiesRecursively = subzero.megaFreeze( function( valu
 
         const property = value[ propertyName ];
 
-        const propertyIsAFunctionOrClass = ( typeof property === 'function' );
+        const propertyIsAFunctionOrClass = (typeof property === 'function');
 
-        const propertyIsAnObject = (property !== null) && (typeof property === 'object' );
+        const propertyIsAnObject = (property !== null) && (typeof property === 'object');
 
         const propertyHasNotBeenTestedAlready = (testedAlready.indexOf( property ) < 0);
 
