@@ -4,6 +4,7 @@ const subzero = require( 'subzero' );
 
 const INPUT_VALUE = 'inputValue';
 
+
 module.exports = subzero.megaFreeze( function isDeepFrozen( inputValue ) {
 
     const notFrozen = [];
