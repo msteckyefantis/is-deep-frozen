@@ -199,7 +199,7 @@ describe( MODULE_PATH, function() {
 
             expect( result.error.message ).to.include( 'property: inputValue[ "b" ]' );
             expect( result.error.message ).to.include( 'property: inputValue[ "c" ]' );
-            expect( result.error.message ).to.not.include( 'property: inputValue[ "c" ][ "d" ] ' );
+            expect( result.error.message ).to.not.include( 'property: inputValue[ "c" ][ "d" ],' );
 
             expect( result.error.message ).to.not.include( 'property: inputValue[ "b" ][ "f" ], value: () => {}' );
             expect( result.error.message ).to.not.include( 'property: inputValue[ "b" ][ "f" ][ "g" ], value: () => {}' );
