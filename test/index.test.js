@@ -23,6 +23,8 @@ describe( MODULE_PATH, function() {
             const result = isDeepFrozen( 'string' );
 
             expect( result ).to.eql( {} );
+
+            expect( result ).to.be.frozen;
         });
 
         it( 'number', function() {
@@ -30,6 +32,8 @@ describe( MODULE_PATH, function() {
             const result = isDeepFrozen( 69 );
 
             expect( result ).to.eql( {} );
+
+            expect( result ).to.be.frozen;
         });
 
         it( 'boolean', function() {
@@ -37,6 +41,8 @@ describe( MODULE_PATH, function() {
             const result = isDeepFrozen( true );
 
             expect( result ).to.eql( {} );
+
+            expect( result ).to.be.frozen;
         });
 
         it( 'single object not frozen', function() {
@@ -48,6 +54,9 @@ describe( MODULE_PATH, function() {
             expect( result.notDeeplyFrozen ).to.be.true;
 
             expect( result.error.message ).to.include( 'property: inputValue, value: {}' );
+
+            expect( result ).to.be.frozen;
+            expect( result.error ).to.be.frozen;
         });
 
         it( 'single frozen object', function() {
@@ -57,6 +66,8 @@ describe( MODULE_PATH, function() {
             const result = isDeepFrozen( controlObject );
 
             expect( result ).to.eql( {} );
+
+            expect( result ).to.be.frozen;
         });
 
         it( 'single function not frozen', function() {
@@ -69,6 +80,9 @@ describe( MODULE_PATH, function() {
 
             expect( result.error.message ).to.include( 'property: inputValue, value: function () {}' );
             expect( result.error.message ).to.include( 'property: inputValue[ "prototype" ], value: {}' );
+
+            expect( result ).to.be.frozen;
+            expect( result.error ).to.be.frozen;
         });
 
         it( 'single frozen function (prototype also frozen)', function() {
@@ -81,6 +95,8 @@ describe( MODULE_PATH, function() {
             const result = isDeepFrozen( controlFunction );
 
             expect( result ).to.eql( {} );
+
+            expect( result ).to.be.frozen;
         });
 
         it( 'single class not frozen', function() {
@@ -93,6 +109,9 @@ describe( MODULE_PATH, function() {
 
             expect( result.error.message ).to.include( 'property: inputValue, value: class {}' );
             expect( result.error.message ).to.include( 'property: inputValue[ "prototype" ], value: {}' );
+
+            expect( result ).to.be.frozen;
+            expect( result.error ).to.be.frozen;
         });
 
         it( 'single arrow function not frozen', function() {
@@ -102,6 +121,9 @@ describe( MODULE_PATH, function() {
             const result = isDeepFrozen( controlFunction );
 
             expect( result.error.message ).to.include( 'property: inputValue, value: () => {}' );
+
+            expect( result ).to.be.frozen;
+            expect( result.error ).to.be.frozen;
         });
 
         it( 'more complex object with nothing frozen', function() {
@@ -156,6 +178,9 @@ describe( MODULE_PATH, function() {
 
             expect( result.error.message ).to.include( 'property: inputValue[ "c" ][ "d" ][ "x" ], value: () => {}' );
             expect( result.error.message ).to.include( 'property: inputValue[ "c" ][ "d" ][ "x" ][ "y" ], value: () => {}' );
+
+            expect( result ).to.be.frozen;
+            expect( result.error ).to.be.frozen;
         });
 
         it( 'more complex object with some stuff frozen (non frozen inside frozen)', function() {
@@ -218,6 +243,9 @@ describe( MODULE_PATH, function() {
 
             expect( result.error.message ).to.not.include( 'property: inputValue[ "c" ][ "d" ][ "x" ], value: () => {}' );
             expect( result.error.message ).to.include( 'property: inputValue[ "c" ][ "d" ][ "x" ][ "y" ], value: () => {}' );
+
+            expect( result ).to.be.frozen;
+            expect( result.error ).to.be.frozen;
         });
 
         it( 'more complex object with everything frozen', function() {
@@ -266,6 +294,8 @@ describe( MODULE_PATH, function() {
             const result = isDeepFrozen( subzero.megaFreeze( a ) );
 
             expect( result ).to.eql( {} );
+
+            expect( result ).to.be.frozen;
         });
     });
 
@@ -308,6 +338,6 @@ describe( MODULE_PATH, function() {
             expect( failingResult.error.message ).to.include( 'property: inputValue,' );
             expect( failingResult.error.message ).to.include( 'property: inputValue[ "prototype" ],' );
             expect( failingResult.error.message ).to.include( 'property: inputValue[ "a" ][ "b" ],' );
-        })
+        });
     });
 });
