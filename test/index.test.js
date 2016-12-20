@@ -136,7 +136,7 @@ describe( MODULE_PATH, function() {
 
             const result = isDeepFrozen( a );
 
-            expect( result.error.message ).to.include( 'property: inputValue' );
+            expect( result.error.message ).to.include( 'property: inputValue,' );
 
             expect( result.error.message ).to.include( 'property: inputValue[ "b" ]' );
             expect( result.error.message ).to.include( 'property: inputValue[ "c" ]' );
@@ -195,7 +195,7 @@ describe( MODULE_PATH, function() {
 
             const result = isDeepFrozen( a );
 
-            expect( result.error.message ).to.not.include( 'property: inputValue ' );
+            expect( result.error.message ).to.not.include( 'property: inputValue,' );
 
             expect( result.error.message ).to.include( 'property: inputValue[ "b" ]' );
             expect( result.error.message ).to.include( 'property: inputValue[ "c" ]' );
