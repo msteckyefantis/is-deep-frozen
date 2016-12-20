@@ -45,7 +45,7 @@ f.a = Object.freeze({ b: {} });
 
 const failingResult = isDeepFrozen( f );
 
-// failingResult.notFrozen will be set to true
+// failingResult.notDeeplyFrozen will be set to true
 
 console.log( failingResult.error );
 

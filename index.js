@@ -23,7 +23,7 @@ module.exports = subzero.megaFreeze( function isDeepFrozen( inputValue ) {
 
         result.error = error;
 
-        result.notFrozen = true;
+        result.notDeeplyFrozen = true;
     }
 
     notFrozen.length = 0;

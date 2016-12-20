@@ -284,7 +284,7 @@ describe( MODULE_PATH, function() {
 
             const failingResult = isDeepFrozen( f );
 
-            // failingResult.notFrozen will be set to true
+            // failingResult.notDeeplyFrozen will be set to true
 
             //COMMENTED OUT FOR SAKE OF TEST console.log( failingResult.error );
 
@@ -293,7 +293,7 @@ describe( MODULE_PATH, function() {
 
             expect( passingResult ).to.eql({});
 
-            expect( failingResult.notFrozen ).to.be.true;
+            expect( failingResult.notDeeplyFrozen ).to.be.true;
 
             expect( failingResult.error.message ).to.include( 'property: input value itself' );
             expect( failingResult.error.message ).to.include( 'property: prototype' );
