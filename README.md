@@ -53,8 +53,8 @@ console.log( failingResult.error );
     the resulting log is:
 
     { NotDeeplyFrozenError: property: inputValue, value: function () {}
-        property: inputValue.prototype, value: {}
-        property: inputValue.a.b, value: {}
+        property: inputValue[ "prototype" ], value: {}
+        property: inputValue[ "a" ][ "b" ], value: {}
             at isDeepFrozen (/Users/test_dir/index.js:20:23)
             ...
     }

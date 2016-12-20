@@ -295,7 +295,7 @@ describe( MODULE_PATH, function() {
 
             expect( failingResult.notDeeplyFrozen ).to.be.true;
 
-            expect( failingResult.error.message ).to.include( 'property: inputValue' );
+            expect( failingResult.error.message ).to.include( 'property: inputValue,' );
             expect( failingResult.error.message ).to.include( 'property: inputValue[ "prototype" ]' );
             expect( failingResult.error.message ).to.include( 'property: inputValue[ "a" ][ "b" ]' );
         })
