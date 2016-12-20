@@ -63,7 +63,7 @@ const testFrozennessOfPropertiesRecursively = subzero.megaFreeze( function( valu
 });
 
 
-const addToNotFrozenIfNotFrozen = subzero.megaFreeze( ( propertyName, property, notFrozen ) => {
+const addToNotFrozenIfNotFrozen = subzero.megaFreeze( function( propertyName, property, notFrozen ) {
 
     if( !Object.isFrozen( property ) ) {
 
