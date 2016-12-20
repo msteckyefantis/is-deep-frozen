@@ -7,11 +7,13 @@ module.exports = subzero.megaFreeze( function isDeepFrozen( inputValue ) {
 
     const notFrozen = [];
 
-    addToNotFrozenIfNotFrozen( 'input value itself', inputValue, notFrozen )
+    addToNotFrozenIfNotFrozen( 'inputValue', inputValue, notFrozen )
 
     const testedAlready = [ inputValue ];
 
-    testFrozennessOfPropertiesRecursively( inputValue, notFrozen, testedAlready );
+    const basePath = 'inputValue.';
+
+    testFrozennessOfPropertiesRecursively( basePath, inputValue, notFrozen, testedAlready );
 
     const result = {};
 
@@ -35,7 +37,7 @@ module.exports = subzero.megaFreeze( function isDeepFrozen( inputValue ) {
 });
 
 
-const testFrozennessOfPropertiesRecursively = subzero.megaFreeze( function( value, notFrozen, testedAlready ) {
+const testFrozennessOfPropertiesRecursively = subzero.megaFreeze( function( basePath, value, notFrozen, testedAlready ) {
 
     for( const propertyName of Object.getOwnPropertyNames( value ) ) {
 
@@ -53,22 +55,26 @@ const testFrozennessOfPropertiesRecursively = subzero.megaFreeze( function( valu
             propertyHasNotBeenTestedAlready
         ) {
 
-            addToNotFrozenIfNotFrozen( propertyName, property, notFrozen );
+            const fullPropertyName =  basePath + propertyName;
+
+            addToNotFrozenIfNotFrozen( fullPropertyName, property, notFrozen );
 
             testedAlready.push( property );
 
-            testFrozennessOfPropertiesRecursively( property, notFrozen, testedAlready );
+            const newBathPath = fullPropertyName + '.';
+
+            testFrozennessOfPropertiesRecursively( newBathPath, property, notFrozen, testedAlready );
         }
     }
 });
 
 
-const addToNotFrozenIfNotFrozen = subzero.megaFreeze( function( propertyName, property, notFrozen ) {
+const addToNotFrozenIfNotFrozen = subzero.megaFreeze( function( fullPropertyName, property, notFrozen ) {
 
     if( !Object.isFrozen( property ) ) {
 
         const valueAsString = JSON.stringify( property, null, 4 ) || property.toString();
 
-        notFrozen.push( `property: ${ propertyName }, value: ${ valueAsString }` );
+        notFrozen.push( `property: ${ fullPropertyName }, value: ${ valueAsString }` );
     }
 });
