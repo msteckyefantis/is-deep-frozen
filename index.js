@@ -5,36 +5,38 @@ const subzero = require( 'subzero' );
 const INPUT_VALUE = 'inputValue';
 
 
-module.exports = subzero.megaFreeze( function isDeepFrozen( inputValue ) {
+const isDeepFrozen = subzero.megaFreeze( inputValue => {
 
-    const notFrozen = [];
+    const nonFrozenPropertyDescriptors = [];
 
-    addToNotFrozenIfNotFrozen( INPUT_VALUE, inputValue, notFrozen );
+    addToNonFrozenPropertyDescriptorsIfNotFrozen( INPUT_VALUE, inputValue, nonFrozenPropertyDescriptors );
 
     const testedAlready = [ inputValue ];
 
-    testFrozennessOfPropertiesRecursively( INPUT_VALUE, inputValue, notFrozen, testedAlready );
+    testFrozennessOfPropertiesRecursively( INPUT_VALUE, inputValue, nonFrozenPropertyDescriptors, testedAlready );
 
-    const result = getResult( notFrozen );
+    const result = getResult( nonFrozenPropertyDescriptors );
 
-    cleanUpArrays( notFrozen, testedAlready );
+    cleanUpArrays( nonFrozenPropertyDescriptors, testedAlready );
 
     return result;
 });
 
 
-const addToNotFrozenIfNotFrozen = subzero.megaFreeze( function( fullPropertyName, property, notFrozen ) {
+const addToNonFrozenPropertyDescriptorsIfNotFrozen = subzero.megaFreeze( (fullPropertyName, property, nonFrozenPropertyDescriptors) => {
 
     if( !Object.isFrozen( property ) ) {
 
-        const valueAsString = JSON.stringify( property, null, 4 ) || property.toString();
+        const valueAsAString = JSON.stringify( property, null, 4 ) || property.toString();
 
-        notFrozen.push( `property: ${ fullPropertyName }, value: ${ valueAsString }` );
+        const descriptor = `property: ${ fullPropertyName }, value: ${ valueAsAString }`;
+
+        nonFrozenPropertyDescriptors.push( descriptor );
     }
 });
 
 
-const testFrozennessOfPropertiesRecursively = subzero.megaFreeze( function( basePath, value, notFrozen, testedAlready ) {
+const testFrozennessOfPropertiesRecursively = subzero.megaFreeze( ( basePath, value, nonFrozenPropertyDescriptors, testedAlready ) => {
 
     for( const propertyName of Object.getOwnPropertyNames( value ) ) {
 
@@ -54,23 +56,23 @@ const testFrozennessOfPropertiesRecursively = subzero.megaFreeze( function( base
 
             const fullPropertyName = `${ basePath }[ "${ propertyName }" ]`;
 
-            addToNotFrozenIfNotFrozen( fullPropertyName, property, notFrozen );
+            addToNonFrozenPropertyDescriptorsIfNotFrozen( fullPropertyName, property, nonFrozenPropertyDescriptors );
 
             testedAlready.push( property );
 
-            testFrozennessOfPropertiesRecursively( fullPropertyName, property, notFrozen, testedAlready );
+            testFrozennessOfPropertiesRecursively( fullPropertyName, property, nonFrozenPropertyDescriptors, testedAlready );
         }
     }
 });
 
 
-const getResult = subzero.megaFreeze( function( notFrozen ) {
+const getResult = subzero.megaFreeze( nonFrozenPropertyDescriptors => {
 
     const result = {};
 
-    if( notFrozen.length > 0 ) {
+    if( nonFrozenPropertyDescriptors.length > 0 ) {
 
-        const error = new Error( notFrozen.join( '\n' ) );
+        const error = new Error( nonFrozenPropertyDescriptors.join( '\n' ) );
 
         error.name = 'NotDeeplyFrozenError';
 
@@ -83,11 +85,14 @@ const getResult = subzero.megaFreeze( function( notFrozen ) {
 });
 
 
-const cleanUpArrays = subzero.megaFreeze( function() {
+const cleanUpArrays = subzero.megaFreeze( ( array1, array2 ) => {
 
-    for( const array of arguments ) {
+    for( const array of [ array1, array2 ] ) {
 
         array.length = 0;
         subzero.megaFreeze( array );
     }
 });
+
+
+module.exports = isDeepFrozen;

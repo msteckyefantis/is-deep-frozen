@@ -120,6 +120,8 @@ describe( MODULE_PATH, function() {
 
             const result = isDeepFrozen( controlFunction );
 
+            expect( result.notDeeplyFrozen ).to.be.true;
+
             expect( result.error.message ).to.include( 'property: inputValue, value: () => {}' );
 
             expect( result ).to.be.frozen;
