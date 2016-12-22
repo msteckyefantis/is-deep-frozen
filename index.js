@@ -9,11 +9,22 @@ const isDeepFrozen = subzero.megaFreeze( inputValue => {
 
     const nonFrozenPropertyDescriptors = [];
 
-    addToNonFrozenPropertyDescriptorsIfNotFrozen( INPUT_VALUE, inputValue, nonFrozenPropertyDescriptors );
+    addToNonFrozenPropertyDescriptorsIfNotFrozen(
+
+        INPUT_VALUE,
+        inputValue,
+        nonFrozenPropertyDescriptors
+    );
 
     const testedAlready = [ inputValue ];
 
-    testFrozennessOfPropertiesRecursively( INPUT_VALUE, inputValue, nonFrozenPropertyDescriptors, testedAlready );
+    testFrozennessOfPropertiesRecursively(
+
+        INPUT_VALUE,
+        inputValue,
+        nonFrozenPropertyDescriptors,
+        testedAlready
+    );
 
     const result = getResult( nonFrozenPropertyDescriptors );
 
@@ -23,47 +34,64 @@ const isDeepFrozen = subzero.megaFreeze( inputValue => {
 });
 
 
-const addToNonFrozenPropertyDescriptorsIfNotFrozen = subzero.megaFreeze( (fullPropertyName, property, nonFrozenPropertyDescriptors) => {
+const addToNonFrozenPropertyDescriptorsIfNotFrozen = subzero.megaFreeze(
 
-    if( !Object.isFrozen( property ) ) {
+    ( fullPropertyName, property, nonFrozenPropertyDescriptors ) => {
 
-        const valueAsAString = JSON.stringify( property, null, 4 ) || property.toString();
+        if( !Object.isFrozen( property ) ) {
 
-        const descriptor = `property: ${ fullPropertyName }, value: ${ valueAsAString }`;
+            const valueAsAString = JSON.stringify( property, null, 4 ) || property.toString();
 
-        nonFrozenPropertyDescriptors.push( descriptor );
-    }
-});
+            const descriptor = `property: ${ fullPropertyName }, value: ${ valueAsAString }`;
 
-
-const testFrozennessOfPropertiesRecursively = subzero.megaFreeze( ( basePath, value, nonFrozenPropertyDescriptors, testedAlready ) => {
-
-    for( const propertyName of Object.getOwnPropertyNames( value ) ) {
-
-        const property = value[ propertyName ];
-
-        const propertyIsAFunctionOrAClass = (typeof property === 'function');
-
-        const propertyIsAnObject = (property !== null) && (typeof property === 'object');
-
-        const propertyHasNotBeenTestedAlready = (testedAlready.indexOf( property ) < 0);
-
-        if(
-            (propertyIsAFunctionOrAClass || propertyIsAnObject) &&
-
-            propertyHasNotBeenTestedAlready
-        ) {
-
-            const fullPropertyName = `${ basePath }[ "${ propertyName }" ]`;
-
-            addToNonFrozenPropertyDescriptorsIfNotFrozen( fullPropertyName, property, nonFrozenPropertyDescriptors );
-
-            testedAlready.push( property );
-
-            testFrozennessOfPropertiesRecursively( fullPropertyName, property, nonFrozenPropertyDescriptors, testedAlready );
+            nonFrozenPropertyDescriptors.push( descriptor );
         }
     }
-});
+);
+
+
+const testFrozennessOfPropertiesRecursively = subzero.megaFreeze(
+
+    ( basePath, value, nonFrozenPropertyDescriptors, testedAlready ) => {
+
+        for( const propertyName of Object.getOwnPropertyNames( value ) ) {
+
+            const property = value[ propertyName ];
+
+            const propertyIsAFunctionOrAClass = (typeof property === 'function');
+
+            const propertyIsAnObject = (property !== null) && (typeof property === 'object');
+
+            const propertyHasNotBeenTestedAlready = (testedAlready.indexOf( property ) < 0);
+
+            if(
+                (propertyIsAFunctionOrAClass || propertyIsAnObject) &&
+
+                propertyHasNotBeenTestedAlready
+            ) {
+
+                const fullPropertyName = `${ basePath }[ "${ propertyName }" ]`;
+
+                addToNonFrozenPropertyDescriptorsIfNotFrozen(
+
+                    fullPropertyName,
+                    property,
+                    nonFrozenPropertyDescriptors
+                );
+
+                testedAlready.push( property );
+
+                testFrozennessOfPropertiesRecursively(
+
+                    fullPropertyName,
+                    property,
+                    nonFrozenPropertyDescriptors,
+                    testedAlready
+                );
+            }
+        }
+    }
+);
 
 
 const getResult = subzero.megaFreeze( nonFrozenPropertyDescriptors => {
