@@ -11,7 +11,7 @@ The question that has plagued monkey-kind and human-kind for millions of years.
 
 Find out if your javascript object, function, or class is deeply frozen.
 
-What this module checks:
+#####What this module checks:
 
 1. Any object, function, or class you input or that is inside your input value will be frozen.
 
@@ -19,7 +19,8 @@ What this module checks:
 
 > Note: Primitive javascript types (e.g. string or number) are considered to be frozen in this module.
 
-If you want to deeply freeze your objects, you can use the following:
+<br>
+#####If you want to deeply freeze your objects, you can use the following:
 
 1. [subzero](https://github.com/msteckyefantis/subzero)
 2. [deep-freeze](https://github.com/substack/deep-freeze)
