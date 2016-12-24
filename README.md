@@ -19,7 +19,8 @@ Find out if your javascript object, function, or class is deeply frozen.
 
 > Note: Primitive javascript types (e.g. string or number) are considered to be frozen in this module.
 
-<br>
+<br>  
+
 #####If you want to deeply freeze your objects, you can use the following:
 
 1. [subzero](https://github.com/msteckyefantis/subzero)
