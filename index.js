@@ -60,17 +60,14 @@ const isNotMaximallyFrozen = subzero.megaFreeze(
 
             return !Object.isFrozen( property );
         }
+        else if( nodeVersion >= 6.9 ) {
+
+            // buffers can only be sealed, and can't be frozen
+            return !Object.isSealed( property );
+        }
         else {
 
-            if( nodeVersion >= 6.9 ) {
-
-                // buffers can only be sealed, and can't be frozen
-                return !Object.isSealed( property );
-            }
-            else {
-
-                return false;
-            }
+            return false;
         }
     }
 );
