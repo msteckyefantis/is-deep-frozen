@@ -4,7 +4,7 @@ const subzero = require( 'subzero' );
 
 const INPUT_VALUE = 'inputValue';
 
-const nodeVersion = Number( process.version.substring(1,4) );
+const nodeVersion = Number( process.version.substring( 1, 4 ) );
 
 
 const isDeepFrozen = subzero.megaFreeze( inputValue => {
