@@ -12,6 +12,11 @@ The question that has plagued monkey-kind and human-kind for millions of years.
 Find out if your javascript object, function, or class is deeply frozen.
 
 
+##Note:
+
+Will be patching to v4 soon, with some more minor changes accompanying the new buffer support.
+
+
 #####What this module checks:
 
 1. Any object, function, or class you input or that is inside your input value will be frozen.
