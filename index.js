@@ -40,32 +40,37 @@ const addToNonFrozenPropertyDescriptorsIfNotMaximallyFrozen = subzero.megaFreeze
 
     ( fullPropertyName, property, nonFrozenPropertyDescriptors ) => {
 
-        let isNotMaximallyFrozen;
-
-        if( !(property instanceof Buffer) ) {
-
-            isNotMaximallyFrozen = !Object.isFrozen( property );
-        }
-        else {
-
-            if( nodeVersion >= 6.9 ) {
-
-                // buffers can only be sealed, and can't be frozen
-                isNotMaximallyFrozen = !Object.isSealed( property );
-            }
-            else {
-
-                isNotMaximallyFrozen = false;
-            }
-        }
-
-        if( isNotMaximallyFrozen ) {
+        if( isNotMaximallyFrozen( property ) ) {
 
             const valueAsAString = JSON.stringify( property, null, 4 ) || property.toString();
 
             const descriptor = `property: ${ fullPropertyName }, value: ${ valueAsAString }`;
 
             nonFrozenPropertyDescriptors.push( descriptor );
+        }
+    }
+);
+
+
+const isNotMaximallyFrozen = subzero.megaFreeze(
+
+    property => {
+
+        if( !(property instanceof Buffer) ) {
+
+            return !Object.isFrozen( property );
+        }
+        else {
+
+            if( nodeVersion >= 6.9 ) {
+
+                // buffers can only be sealed, and can't be frozen
+                return !Object.isSealed( property );
+            }
+            else {
+
+                return false;
+            }
         }
     }
 );
