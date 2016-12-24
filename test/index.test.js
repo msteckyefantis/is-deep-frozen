@@ -13,6 +13,8 @@ const isDeepFrozen = require( FULL_MODULE_PATH );
 
 const subzero = require( 'subzero' );
 
+const nodeVersion = Number( process.version.substring(1,4) );
+
 
 describe( MODULE_PATH, function() {
 
@@ -45,7 +47,31 @@ describe( MODULE_PATH, function() {
             expect( result ).to.be.frozen;
         });
 
-        xit( 'nested buffers', function() {
+        it( 'unsealed buffer', function() {
+
+            const buffer = new Buffer( 69 );
+
+            if( nodeVersion >= 6.9 ) {
+
+                const result = isDeepFrozen( buffer );
+
+                expect( result.error.message ).to.include( 'property: inputValue,' );
+
+                expect( result.notDeeplyFrozen ).to.be.true;
+                expect( result ).to.be.frozen;
+                expect( result.error ).to.be.frozen;
+            }
+            else {
+
+                const result = isDeepFrozen( buffer );
+
+                expect( result ).to.eql( {} );
+
+                expect( result ).to.be.frozen;
+            }
+        });
+
+        it( 'nested sealed buffers', function() {
 
             const buffer = new Buffer( 69 );
 
@@ -65,21 +91,38 @@ describe( MODULE_PATH, function() {
                 zzz: 222
             };
 
-            Object.seal( buffer );
+            if( nodeVersion >= 6.9 ) {
 
-            Object.seal( innerBuffer );
+                Object.seal( buffer );
 
-            Object.freeze( buffer.x );
+                Object.seal( innerBuffer );
 
-            Object.freeze( buffer.x.y );
+                Object.freeze( buffer.x );
 
-            Object.freeze( buffer.x.y.b.z );
+                Object.freeze( buffer.x.y );
 
-            const result = isDeepFrozen( buffer );
+                Object.freeze( buffer.x.y.b.z );
 
-            expect( result ).to.eql( {} );
+                const result = isDeepFrozen( buffer );
 
-            expect( result ).to.be.frozen;
+                expect( result ).to.eql( {} );
+
+                expect( result ).to.be.frozen;
+            }
+            else {
+
+                Object.freeze( buffer.x );
+
+                Object.freeze( buffer.x.y );
+
+                Object.freeze( buffer.x.y.b.z );
+
+                const result = isDeepFrozen( buffer );
+
+                expect( result ).to.eql( {} );
+
+                expect( result ).to.be.frozen;
+            }
         });
 
         it( 'single object not frozen', function() {
