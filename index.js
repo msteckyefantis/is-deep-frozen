@@ -9,7 +9,7 @@ const isDeepFrozen = subzero.megaFreeze( inputValue => {
 
     const nonFrozenPropertyDescriptors = [];
 
-    addToNonFrozenPropertyDescriptorsIfNotFrozen(
+    addToNonFrozenPropertyDescriptorsIfNotMaximallyFrozen(
 
         INPUT_VALUE,
         inputValue,
@@ -34,11 +34,23 @@ const isDeepFrozen = subzero.megaFreeze( inputValue => {
 });
 
 
-const addToNonFrozenPropertyDescriptorsIfNotFrozen = subzero.megaFreeze(
+const addToNonFrozenPropertyDescriptorsIfNotMaximallyFrozen = subzero.megaFreeze(
 
     ( fullPropertyName, property, nonFrozenPropertyDescriptors ) => {
 
-        if( !Object.isFrozen( property ) ) {
+        let isNotMaximallyFrozen;
+
+        if ( !(property instanceof Buffer) ) {
+
+            isNotMaximallyFrozen = !Object.isFrozen( property );
+        }
+        else {
+
+            // buffers can only be sealed, and can't be frozen
+            isNotMaximallyFrozen = !Object.isSealed( property );
+        }
+
+        if( isNotMaximallyFrozen ) {
 
             const valueAsAString = JSON.stringify( property, null, 4 ) || property.toString();
 
@@ -72,7 +84,7 @@ const testFrozennessOfPropertiesRecursively = subzero.megaFreeze(
 
                 const fullPropertyName = `${ basePath }[ "${ propertyName }" ]`;
 
-                addToNonFrozenPropertyDescriptorsIfNotFrozen(
+                addToNonFrozenPropertyDescriptorsIfNotMaximallyFrozen(
 
                     fullPropertyName,
                     property,

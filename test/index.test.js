@@ -45,6 +45,43 @@ describe( MODULE_PATH, function() {
             expect( result ).to.be.frozen;
         });
 
+        it( 'nested buffers', function() {
+
+            const buffer = new Buffer( 69 );
+
+            const innerBuffer = new Buffer( 222 );
+
+            buffer.x = {
+
+                xxx: 69,
+                y: {
+
+                    b: innerBuffer
+                }
+            };
+
+            innerBuffer.z = {
+
+                zzz: 222
+            };
+
+            Object.seal( buffer );
+
+            Object.seal( innerBuffer );
+
+            Object.freeze( buffer.x );
+
+            Object.freeze( buffer.x.y );
+
+            Object.freeze( buffer.x.y.b.z );
+
+            const result = isDeepFrozen( buffer );
+
+            expect( result ).to.eql( {} );
+
+            expect( result ).to.be.frozen;
+        });
+
         it( 'single object not frozen', function() {
 
             const controlObject = {};
