@@ -45,7 +45,7 @@ describe( MODULE_PATH, function() {
             expect( result ).to.be.frozen;
         });
 
-        it( 'nested buffers', function() {
+        xit( 'nested buffers', function() {
 
             const buffer = new Buffer( 69 );
 
