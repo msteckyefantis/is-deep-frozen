@@ -1,6 +1,6 @@
 {
   "name": "is-deep-frozen",
-  "version": "3.2.3",
+  "version": "3.2.4",
   "description": "check if an object or function is deeply frozen",
   "main": "index.js",
   "scripts": {
