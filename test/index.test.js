@@ -13,7 +13,17 @@ const isDeepFrozen = require( FULL_MODULE_PATH );
 
 const subzero = require( 'subzero' );
 
-const nodeVersion = Number( process.version.substring(1,4) );
+const nodeVersion = (() => {
+
+    const splitVersion = subzero.megaFreeze( process.version.split( '.' ) );
+
+    return Number(
+
+        splitVersion[0].substring( 1 ) +
+        '.' +
+        splitVersion[1]
+    );
+})();
 
 
 describe( MODULE_PATH, function() {
