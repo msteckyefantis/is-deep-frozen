@@ -421,5 +421,15 @@ describe( MODULE_PATH, function() {
             expect( failingResult.error.message ).to.include( 'property: inputValue[ "prototype" ],' );
             expect( failingResult.error.message ).to.include( 'property: inputValue[ "a" ][ "b" ],' );
         });
+
+        it( 'log message about coverage and versions', function() {
+
+            console.log( `
+
+                if coverage is 97.92% ( 47/48 ):
+
+                this module is fully covered for node version ${ nodeVersion }`
+            );
+        });
     });
 });

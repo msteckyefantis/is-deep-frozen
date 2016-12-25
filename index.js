@@ -4,8 +4,6 @@ const subzero = require( 'subzero' );
 
 const INPUT_VALUE = 'inputValue';
 
-const nodeVersion = Number( process.version.substring( 1, 4 ) );
-
 
 const isDeepFrozen = subzero.megaFreeze( inputValue => {
 
@@ -60,7 +58,7 @@ const isNotMaximallyFrozen = subzero.megaFreeze(
 
             return !Object.isFrozen( property );
         }
-        else if( nodeVersion >= 6.9 ) {
+        else if( getNodeVersion() >= 6.9 ) {
 
             // buffers can only be sealed, and can't be frozen
             return !Object.isSealed( property );
@@ -143,6 +141,19 @@ const cleanUpArrays = subzero.megaFreeze( ( array1, array2 ) => {
         array.length = 0;
         subzero.megaFreeze( array );
     }
+});
+
+
+const getNodeVersion = subzero.megaFreeze( () => {
+
+    const splitVersion = subzero.megaFreeze( process.version.split( '.' ) );
+
+    return Number(
+
+        splitVersion[0].substring( 1 ) +
+        '.' +
+        splitVersion[1]
+    );
 });
 
 
