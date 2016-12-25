@@ -13,17 +13,7 @@ const isDeepFrozen = require( FULL_MODULE_PATH );
 
 const subzero = require( 'subzero' );
 
-const nodeVersion = (() => {
-
-    const splitVersion = subzero.megaFreeze( process.version.split( '.' ) );
-
-    return Number(
-
-        splitVersion[0].substring( 1 ) +
-        '.' +
-        splitVersion[1]
-    );
-})();
+const nodeVersion = Number( process.versions.node.split( '.' )[0] );
 
 
 describe( MODULE_PATH, function() {
@@ -61,7 +51,7 @@ describe( MODULE_PATH, function() {
 
             const buffer = new Buffer( 69 );
 
-            if( nodeVersion >= 6.9 ) {
+            if( nodeVersion >= 6 ) {
 
                 const result = isDeepFrozen( buffer );
 
@@ -101,7 +91,7 @@ describe( MODULE_PATH, function() {
                 zzz: 222
             };
 
-            if( nodeVersion >= 6.9 ) {
+            if( nodeVersion >= 6 ) {
 
                 Object.seal( buffer );
 
@@ -432,14 +422,44 @@ describe( MODULE_PATH, function() {
             expect( failingResult.error.message ).to.include( 'property: inputValue[ "a" ][ "b" ],' );
         });
 
-        it( 'log message about coverage and versions', function() {
+        it( 'message about coverage', function() {
 
-            console.log( `
+            if( nodeVersion >= 6) {
 
-                if coverage is 97.92% ( 47/48 ):
+                console.log(`
 
-                this module is fully covered for node version ${ nodeVersion }`
-            );
+                the following coverage results means the code is fully covered for
+
+                node v6 or greater
+
+                current version: ${ nodeVersion }
+
+                ----
+                Statements   : 97.83% ( 45/46 )
+                Branches     : 94.12% ( 16/17 )
+                Functions    : 100% ( 0/0 )
+                Lines        : 97.83% ( 45/46 )
+                ----
+                `);
+            }
+            else {
+
+                console.log(`
+
+                the following coverage results means the code is fully covered for
+
+                less than node v6
+
+                current version: ${ nodeVersion }
+
+                ----
+                Statements   : 97.83% ( 45/46 )
+                Branches     : 94.12% ( 16/17 )
+                Functions    : 100% ( 0/0 )
+                Lines        : 97.83% ( 45/46 )
+                ----
+                `);
+            }
         });
     });
 });

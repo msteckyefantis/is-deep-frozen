@@ -4,17 +4,7 @@ const subzero = require( 'subzero' );
 
 const INPUT_VALUE = 'inputValue';
 
-const nodeVersion = subzero.megaFreeze( () => {
-
-    const splitVersion = subzero.megaFreeze( process.version.split( '.' ) );
-
-    return Number(
-
-        splitVersion[0].substring( 1 ) +
-        '.' +
-        splitVersion[1]
-    );
-})();
+const nodeVersion = Number( process.versions.node.split( '.' )[0] );
 
 
 const isDeepFrozen = subzero.megaFreeze( inputValue => {
@@ -70,7 +60,7 @@ const isNotMaximallyFrozen = subzero.megaFreeze(
 
             return !Object.isFrozen( property );
         }
-        else if( nodeVersion >= 6.9 ) {
+        else if( nodeVersion >= 6 ) {
 
             // buffers can only be sealed, and can't be frozen
             return !Object.isSealed( property );
