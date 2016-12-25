@@ -4,7 +4,7 @@ const subzero = require( 'subzero' );
 
 const INPUT_VALUE = 'inputValue';
 
-const nodeVersion = subzero.megaFreeze(() => {
+const nodeVersion = subzero.megaFreeze( () => {
 
     const splitVersion = subzero.megaFreeze( process.version.split( '.' ) );
 
