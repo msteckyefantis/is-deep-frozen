@@ -96,33 +96,19 @@ describe( MODULE_PATH, function() {
                 Object.seal( buffer );
 
                 Object.seal( innerBuffer );
-
-                Object.freeze( buffer.x );
-
-                Object.freeze( buffer.x.y );
-
-                Object.freeze( buffer.x.y.b.z );
-
-                const result = isDeepFrozen( buffer );
-
-                expect( result ).to.eql( {} );
-
-                expect( result ).to.be.frozen;
             }
-            else {
 
-                Object.freeze( buffer.x );
+            Object.freeze( buffer.x );
 
-                Object.freeze( buffer.x.y );
+            Object.freeze( buffer.x.y );
 
-                Object.freeze( buffer.x.y.b.z );
+            Object.freeze( buffer.x.y.b.z );
 
-                const result = isDeepFrozen( buffer );
+            const result = isDeepFrozen( buffer );
 
-                expect( result ).to.eql( {} );
+            expect( result ).to.eql( {} );
 
-                expect( result ).to.be.frozen;
-            }
+            expect( result ).to.be.frozen;
         });
 
         it( 'single object not frozen', function() {
