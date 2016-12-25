@@ -421,8 +421,16 @@ describe( MODULE_PATH, function() {
             expect( failingResult.error.message ).to.include( 'property: inputValue[ "prototype" ],' );
             expect( failingResult.error.message ).to.include( 'property: inputValue[ "a" ][ "b" ],' );
         });
+    });
 
-        it( 'message about coverage', function() {
+    after( function() {
+
+        console.log(`
+
+            Post-test Messages:
+        `);
+
+        (function displayMessageAboutCoverage() {
 
             if( nodeVersion >= 6) {
 
@@ -460,6 +468,6 @@ describe( MODULE_PATH, function() {
                 ----
                 `);
             }
-        });
+        })();
     });
 });
