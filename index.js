@@ -7,7 +7,7 @@ const INPUT_VALUE = 'inputValue';
 const nodeVersion = Number( process.versions.node.split( '.' )[0] );
 
 
-const isDeepFrozen = subzero.megaFreeze(
+const isDeepFrozen = Object.freeze(
 
     inputValue => {
 
@@ -39,7 +39,7 @@ const isDeepFrozen = subzero.megaFreeze(
 );
 
 
-const addToNonFrozenPropertyDescriptorsIfNotMaximallyFrozen = subzero.megaFreeze(
+const addToNonFrozenPropertyDescriptorsIfNotMaximallyFrozen = Object.freeze(
 
     ( fullPropertyName, property, nonFrozenPropertyDescriptors ) => {
 
@@ -55,7 +55,7 @@ const addToNonFrozenPropertyDescriptorsIfNotMaximallyFrozen = subzero.megaFreeze
 );
 
 
-const isNotMaximallyFrozen = subzero.megaFreeze(
+const isNotMaximallyFrozen = Object.freeze(
 
     property => {
 
@@ -76,7 +76,7 @@ const isNotMaximallyFrozen = subzero.megaFreeze(
 );
 
 
-const testFrozennessOfPropertiesRecursively = subzero.megaFreeze(
+const testFrozennessOfPropertiesRecursively = Object.freeze(
 
     ( basePath, value, nonFrozenPropertyDescriptors, testedAlready ) => {
 
@@ -120,7 +120,7 @@ const testFrozennessOfPropertiesRecursively = subzero.megaFreeze(
 );
 
 
-const getResult = subzero.megaFreeze(
+const getResult = Object.freeze(
 
     nonFrozenPropertyDescriptors => {
 
@@ -137,12 +137,12 @@ const getResult = subzero.megaFreeze(
             result.notDeeplyFrozen = true;
         }
 
-        return subzero.megaFreeze( result );    
+        return subzero.megaFreeze( result );
     }
 );
 
 
-const cleanUpArrays = subzero.megaFreeze(
+const cleanUpArrays = Object.freeze(
 
     ( array1, array2 ) => {
 
