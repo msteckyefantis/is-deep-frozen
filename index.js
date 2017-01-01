@@ -7,33 +7,36 @@ const INPUT_VALUE = 'inputValue';
 const nodeVersion = Number( process.versions.node.split( '.' )[0] );
 
 
-const isDeepFrozen = subzero.megaFreeze( inputValue => {
+const isDeepFrozen = subzero.megaFreeze(
 
-    const nonFrozenPropertyDescriptors = [];
+    inputValue => {
 
-    addToNonFrozenPropertyDescriptorsIfNotMaximallyFrozen(
+        const nonFrozenPropertyDescriptors = [];
 
-        INPUT_VALUE,
-        inputValue,
-        nonFrozenPropertyDescriptors
-    );
+        addToNonFrozenPropertyDescriptorsIfNotMaximallyFrozen(
 
-    const testedAlready = [ inputValue ];
+            INPUT_VALUE,
+            inputValue,
+            nonFrozenPropertyDescriptors
+        );
 
-    testFrozennessOfPropertiesRecursively(
+        const testedAlready = [ inputValue ];
 
-        INPUT_VALUE,
-        inputValue,
-        nonFrozenPropertyDescriptors,
-        testedAlready
-    );
+        testFrozennessOfPropertiesRecursively(
 
-    const result = getResult( nonFrozenPropertyDescriptors );
+            INPUT_VALUE,
+            inputValue,
+            nonFrozenPropertyDescriptors,
+            testedAlready
+        );
 
-    cleanUpArrays( nonFrozenPropertyDescriptors, testedAlready );
+        const result = getResult( nonFrozenPropertyDescriptors );
 
-    return result;
-});
+        cleanUpArrays( nonFrozenPropertyDescriptors, testedAlready );
+
+        return result;
+    }
+);
 
 
 const addToNonFrozenPropertyDescriptorsIfNotMaximallyFrozen = subzero.megaFreeze(
@@ -117,33 +120,39 @@ const testFrozennessOfPropertiesRecursively = subzero.megaFreeze(
 );
 
 
-const getResult = subzero.megaFreeze( nonFrozenPropertyDescriptors => {
+const getResult = subzero.megaFreeze(
 
-    const result = {};
+    nonFrozenPropertyDescriptors => {
 
-    if( nonFrozenPropertyDescriptors.length > 0 ) {
+        const result = {};
 
-        const error = new Error( nonFrozenPropertyDescriptors.join( '\n' ) );
+        if( nonFrozenPropertyDescriptors.length > 0 ) {
 
-        error.name = 'NotDeeplyFrozenError';
+            const error = new Error( nonFrozenPropertyDescriptors.join( '\n' ) );
 
-        result.error = error;
+            error.name = 'NotDeeplyFrozenError';
 
-        result.notDeeplyFrozen = true;
+            result.error = error;
+
+            result.notDeeplyFrozen = true;
+        }
+
+        return subzero.megaFreeze( result );    
     }
-
-    return subzero.megaFreeze( result );
-});
+);
 
 
-const cleanUpArrays = subzero.megaFreeze( ( array1, array2 ) => {
+const cleanUpArrays = subzero.megaFreeze(
 
-    for( const array of [ array1, array2 ] ) {
+    ( array1, array2 ) => {
 
-        array.length = 0;
-        subzero.megaFreeze( array );
+        for( const array of [ array1, array2 ] ) {
+
+            array.length = 0;
+            subzero.megaFreeze( array );
+        }
     }
-});
+);
 
 
 module.exports = isDeepFrozen;
